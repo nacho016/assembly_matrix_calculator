@@ -6,7 +6,7 @@ Programa que calcula: M · v = w (con M matriz n · n)
 
 1. Reservar memoria para variables: número de filas, número de columnas []
 2. Pedir tamaño de la matriz []
-	2.1 Reservar espacio en la pila para guardar M, v y w []
+2.1 Reservar espacio en la pila para guardar M, v y w []
 4. Pedir elementos de la matriz y el vector de manera secuencial []
 5. Calcular el producto de M · v []
 6. Mostrar por pantalla el producto []
