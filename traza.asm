@@ -4,16 +4,15 @@ matriz:	.word 	1, 2, 3		# Inicializamos la matriz
 	 	4, 5, 6, 
 		7, 8, 9 
 traza: .space	4		# Reservamos espacio para la traza
-dim:	.word 	3		# Indicamos la dimensi髇 de la matriz cuadrada
+dim:	.word 	3		# Indicamos la dimensi贸n de la matriz cuadrada
 space:	.byte	' '		# Caracter espacio
-sl:	.byte	'\n'		# Caracter salto de l韓ea
 			
 	.text
 	la	$t0, dim
-	lw 	$s1, 0($t0)		# Dimensi髇 -> s1
-	addi 	$s1, $s1, -1		# Tope dimensi髇 -> s1
-	la 	$t0, matriz 		# Direcci髇 de memoria matriz -> t0
-	la	$t1, traza		# Direcci髇 de memoria traza -> t1
+	lw 	$s1, 0($t0)		# Dimensi贸n -> s1
+	addi 	$s1, $s1, -1		# Tope dimensi贸n -> s1
+	la 	$t0, matriz 		# Direcci贸n de memoria matriz -> t0
+	la	$t1, traza		# Direcci贸n de memoria traza -> t1
 	move 	$t2, $zero		# i = 0
 	move 	$t3, $zero		# j = 0
 	move	$t4, $zero		# traza = 0
@@ -33,14 +32,18 @@ endi:	ble 	$t2, $s1, repeat	# Si i distinto de tope volvemos al bucle de j
 	move	$a0, $t4
 	addi	$v0, $zero, 1
 	syscall
-	
-# Implementaci髇 alternativa
+	# Imprimimos espacio
+	la 	$t9, space		
+	lb	$a0, 0($t9)
+	addi	$v0, $zero, 11
+	syscall
+# Implementaci贸n alternativa
 	la	$t0, dim
-	lw 	$s1, 0($t0)		# Dimensi髇 -> s1
+	lw 	$s1, 0($t0)		# Dimensi贸n -> s1
 	addi	$t4, $s1, 1		# Guardamos 1 + dim
-	addi 	$s1, $s1, -1		# Tope dimensi髇 -> s1
-	la 	$t0, matriz 		# Direcci髇 de memoria matriz -> t0
-	la	$t1, traza		# Direcci髇 de memoria traza -> t1
+	addi 	$s1, $s1, -1		# Tope dimensi贸n -> s1
+	la 	$t0, matriz 		# Direcci贸n de memoria matriz -> t0
+	la	$t1, traza		# Direcci贸n de memoria traza -> t1
 	move 	$t2, $zero		# contador = 0
 	move	$t3, $zero		# traza = 0
 	addi	$t5, $zero, 4
@@ -50,7 +53,7 @@ endi:	ble 	$t2, $s1, repeat	# Si i distinto de tope volvemos al bucle de j
 inc:	addi	$t2, $t2, 1
 for:	lw	$t5, 0($t0)		# Cargamos elemento de la matriz
 	add	$t3, $t3, $t5		# Actualizamos la traza
-	add	$t0, $t0, $t4		# Actualizamos la direcci髇 de memoria al siguiente elemento de la diagonal
+	add	$t0, $t0, $t4		# Actualizamos la direcci贸n de memoria al siguiente elemento de la diagonal
 	blt	$t2, $s1, inc
 	
 	# Imprimimos la traza
@@ -58,5 +61,5 @@ for:	lw	$t5, 0($t0)		# Cargamos elemento de la matriz
 	addi	$v0, $zero, 1
 	syscall
 	
-	li 	$v0, 10			# Finalizar ejecuci髇
+	li 	$v0, 10			# Finalizar ejecuci贸n
 	syscall
